@@ -5,12 +5,17 @@ set(CMAKE_CXX_STANDARD 17)
 
 find_package(fastdds-prefab)
 
-file(GLOB_RECURSE FASTDDS_GEN "*.cxx")
+file(GLOB_RECURSE FASTDDS_GEN
+        "*.cxx"
+        "geometry_msgs/msg/*.cxx"
+)
 
 add_library(${PROJECT_NAME} SHARED
         rosjoydroid.cpp
         ${FASTDDS_GEN})
-target_include_directories(${PROJECT_NAME} PUBLIC .)
+target_include_directories(${PROJECT_NAME} PUBLIC .
+        ${CMAKE_CURRENT_SOURCE_DIR}/geometry_msgs/msg/*
+)
 target_link_libraries(${PROJECT_NAME}
         fastdds-prefab::fastrtps
         fastdds-prefab::fastcdr)

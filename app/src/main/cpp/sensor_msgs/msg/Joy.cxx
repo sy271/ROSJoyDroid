@@ -27,9 +27,7 @@ char dummy;
 #endif  // _WIN32
 
 #include "Joy.h"
-
 #include <fastcdr/Cdr.h>
-
 
 #include <fastcdr/exceptions/BadParamException.h>
 using namespace eprosima::fastcdr::exception;

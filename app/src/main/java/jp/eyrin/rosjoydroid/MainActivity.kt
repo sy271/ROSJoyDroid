@@ -1,22 +1,14 @@
 package jp.eyrin.rosjoydroid
 
 import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -24,32 +16,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
 import jp.eyrin.rosjoydroid.ui.theme.ROSJoyDroidTheme
+import kotlin.math.max
 import java.util.Timer
 import java.util.TimerTask
-import kotlin.math.max
 
 class MainActivity : GamepadActivity() {
+
     private lateinit var publishJoyTimer: Timer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val prefs = getPreferences(Context.MODE_PRIVATE)
 
         setContent {
+
             var domainId by remember { prefs.mutableStateOf("domainId", 0) }
             var ns by remember { prefs.mutableStateOf("ns", "") }
-            var period by remember { prefs.mutableStateOf("period", 20L) }
+            var period by remember { prefs.mutableStateOf("period", 2L) }
             var deadZone by remember { prefs.mutableStateOf("deadZone", 0.05f) }
 
-            LifecycleResumeEffect(domainId, ns, period) {
-                startPublishJoy(domainId, ns, period)
-                onPauseOrDispose {
-                    stopPublishJoy()
-                }
-            }
-
+            // Update deadZone in GamepadActivity whenever it changes
             LaunchedEffect(deadZone) {
                 super.deadZone = deadZone
+            }
+
+            LifecycleResumeEffect(domainId, ns, period) {
+                if (ns != null) {
+//                    startPublishJoy(domainId, ns, period)
+                    startJoyPublisherService(domainId, ns, period, deadZone, axes, buttons)
+                }
+                onPauseOrDispose {
+//                    stopJoystickPublisherService()
+//                    stopPublishJoy()
+                }
             }
 
             ROSJoyDroidTheme {
@@ -59,21 +59,16 @@ class MainActivity : GamepadActivity() {
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(
-                            space = 10.dp,
-                            alignment = Alignment.CenterVertically,
-                        )
+                        verticalArrangement = Arrangement.spacedBy(10.dp, alignment = Alignment.CenterVertically)
                     ) {
                         Text(
-                            text = "ROSJoyDroid",
-                            fontSize = 32.sp,
+                            text = "UTMRBC Controller App",
+                            fontSize = 32.sp
                         )
                         OutlinedTextField(
                             modifier = Modifier.width(400.dp),
                             value = ns,
-                            onValueChange = {
-                                ns = it
-                            },
+                            onValueChange = { ns = it },
                             label = { Text("Namespace") },
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                             singleLine = true,
@@ -113,11 +108,73 @@ class MainActivity : GamepadActivity() {
                                 singleLine = true,
                             )
                         }
+
+                        Row (
+                            modifier = Modifier.width(400.dp),
+                            horizontalArrangement = Arrangement.spacedBy(10.dp)
+                        ) {
+
+
+                            Button(
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(50.dp),
+                                onClick = {
+                                    // Launch TouchScreenActivity with the current parameters
+                                    val intent = Intent(
+                                        applicationContext,
+                                        TouchScreenActivity::class.java
+                                    ).apply {
+                                        putExtra("domainId", domainId)
+                                        putExtra("ns", ns)
+                                        putExtra("period", period)
+                                        putExtra("deadZone", deadZone)
+                                    }
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            ) {
+                                Text(text = "Game Field")
+                            }
+
+                            Button(
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(50.dp),
+                                onClick = {
+                                    // Launch TouchScreenActivity with the current parameters
+                                    val intent = Intent(
+                                        applicationContext,
+                                        ControlPanelActivity::class.java
+                                    )
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            ) {
+                                Text(text = "Contorl Panel")
+                            }
+                        }
                     }
                 }
             }
         }
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        // If needed, we can re-start publishing here, but LaunchedEffect in compose already handles changes
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        stopPublishJoy()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        stopPublishJoy()
+//        destroyJoyPublisher()
+//    }
 
     private fun startPublishJoy(domainId: Int, ns: String, period: Long) {
         stopPublishJoy()
@@ -133,7 +190,29 @@ class MainActivity : GamepadActivity() {
 
     private fun stopPublishJoy() {
         runCatching { publishJoyTimer.cancel() }
-        destroyJoyPublisher()
+        runCatching { publishJoyTimer.purge() }
+        // destroyJoyPublisher() called in onDestroy
+    }
+
+    private fun startJoyPublisherService(domainId: Int, ns: String, period: Long, deadZone: Float, axes : FloatArray, buttons: IntArray) {
+        val serviceIntent = Intent(this, JoyPublisherService::class.java).apply {
+            putExtra("domainId", domainId)
+            putExtra("ns", ns)
+            putExtra("period", period)
+            putExtra("deadZone", deadZone)
+            putExtra("axes", axes)
+            putExtra("buttons", buttons)
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+        } else {
+            startService(serviceIntent)
+        }
+    }
+
+    private fun stopJoystickPublisherService() {
+        val serviceIntent = Intent(this, JoyPublisherService::class.java)
+        stopService(serviceIntent)
     }
 
     private external fun createJoyPublisher(domainId: Int, ns: String)

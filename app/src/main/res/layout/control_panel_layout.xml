@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/Flag1Button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:background="@color/teal_700"
+        android:text="Flag1"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintStart_toStartOf="@+id/Value1DecButton"
+        app:layout_constraintTop_toTopOf="@+id/Flag2Button">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Flag2Button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:background="@color/teal_700"
+        android:text="Flag2"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toStartOf="@+id/Flag3Button"
+        app:layout_constraintStart_toEndOf="@+id/Flag1Button"
+        app:layout_constraintTop_toTopOf="@+id/Flag3Button">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Flag3Button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/teal_700"
+        android:text="Flag3"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toStartOf="@+id/Allignment"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Flag4Button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:background="@color/teal_700"
+        android:text="Flag4"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintStart_toEndOf="@+id/Allignment"
+        app:layout_constraintTop_toTopOf="@+id/Flag3Button">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Flag5Button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:background="@color/teal_700"
+        android:text="Flag5"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toStartOf="@+id/Flag6Button"
+        app:layout_constraintHorizontal_bias="0.583"
+        app:layout_constraintStart_toEndOf="@+id/Flag4Button"
+        app:layout_constraintTop_toTopOf="@+id/Flag4Button">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Flag6Button"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:background="@color/teal_700"
+        android:text="Flag6"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintEnd_toEndOf="@+id/Value1IncButton"
+        app:layout_constraintTop_toTopOf="@+id/Flag5Button">
+
+    </Button>
+
+    <TextView
+        android:id="@+id/Allignment"
+        android:layout_width="40dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="36dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </TextView>
+
+    <!-- ///////////////////////////////////////// -->
+    <!-- //////////////// Value 1 //////////////// -->
+    <!-- ///////////////////////////////////////// -->
+
+    <TextView
+        android:id="@+id/Value1Text"
+        android:layout_width="450dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/cardview_dark_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="Value 1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Allignment">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/Value1DecButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/Value1Text"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Value1Text">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Value1IncButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toEndOf="@+id/Value1Text"
+        app:layout_constraintTop_toTopOf="@+id/Value1Text">
+
+    </Button>
+
+    <!-- ///////////////////////////////////////// -->
+    <!-- //////////////// Value 2 //////////////// -->
+    <!-- ///////////////////////////////////////// -->
+
+    <TextView
+        android:id="@+id/Value2Text"
+        android:layout_width="450dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/cardview_dark_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="Value 2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Value1Text">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/Value2DecButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/Value2Text"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Value2Text">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Value2IncButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toEndOf="@+id/Value2Text"
+        app:layout_constraintTop_toTopOf="@+id/Value2Text">
+
+    </Button>
+
+    <!-- ///////////////////////////////////////// -->
+    <!-- //////////////// Value3 //////////////// -->
+    <!-- ///////////////////////////////////////// -->
+
+    <TextView
+        android:id="@+id/Value3Text"
+        android:layout_width="450dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/cardview_dark_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="Value 3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Value2Text">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/Value3DecButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toStartOf="@+id/Value3Text"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Value3Text">
+
+    </Button>
+
+    <Button
+        android:id="@+id/Value3IncButton"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.344"
+        app:layout_constraintStart_toEndOf="@+id/Value3Text"
+        app:layout_constraintTop_toTopOf="@+id/Value3Text">
+
+    </Button>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:background="@color/material_dynamic_primary100"
+    tools:context=".TouchScreenActivity">
+
+    <ImageView
+        android:id="@+id/backgroundImageView"
+        android:layout_width="666dp"
+        android:layout_height="349dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitCenter"
+        android:src="@drawable/game_field_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.189"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.506" />
+
+    <jp.eyrin.rosjoydroid.MarkerView
+        android:id="@+id/markerView"
+        android:layout_width="664dp"
+        android:layout_height="350dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/backgroundImageView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/backgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/backgroundImageView"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/xDisplay"
+        android:layout_width="104dp"
+        android:layout_height="53dp"
+        android:background="@color/cardview_dark_background"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/yDisplay"
+        app:layout_constraintEnd_toEndOf="@+id/modeButton"
+        app:layout_constraintTop_toBottomOf="@+id/modeButton"
+        tools:text="X: 0.00" />
+
+    <TextView
+        android:id="@+id/yDisplay"
+        android:layout_width="104dp"
+        android:layout_height="53dp"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:background="@color/cardview_dark_background"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImageView"
+        app:layout_constraintEnd_toEndOf="@+id/xDisplay"
+        app:layout_constraintTop_toTopOf="@+id/backgroundImageView"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="Y: 0.00" />
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="106dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/Home"
+        android:background="@color/teal_700"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintStart_toEndOf="@+id/backgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/backgroundImageView" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="106dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/teal_700"
+        android:text="Clear"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintBottom_toTopOf="@+id/modeButton"
+        app:layout_constraintStart_toEndOf="@+id/backgroundImageView"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton" />
+
+    <Button
+        android:id="@+id/modeButton"
+        android:layout_width="106dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/cardview_dark_background"
+        android:text="manual"
+        android:textColor="@color/cardview_light_background"
+        app:layout_constraintBottom_toBottomOf="@+id/backgroundImageView"
+        app:layout_constraintStart_toEndOf="@+id/backgroundImageView"
+        app:layout_constraintTop_toTopOf="@+id/backgroundImageView" />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
